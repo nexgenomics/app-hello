@@ -1,0 +1,72 @@
+/*
+  Design tokens — the entire re-skin surface.
+
+  A later re-style edits ONLY this file (and, if a primitive's shape changes,
+  src/components/ui/*). Feature code never names a raw color: components use
+  semantic Tailwind utilities (bg-surface, text-fg, border-border, bg-accent,
+  font-sans) that resolve through the CSS variables below, which flip under the
+  .dark class. So changing the palette, or the whole look, is a token edit — not
+  a sweep through components.
+
+  Palette (this sprint): copper is the constant accent; dark navy is the dark
+  canvas / the light-theme ink. Intentionally restrained and legible per D-tc-6;
+  the distinctive customer-facing identity lands in the later design pass.
+*/
+
+/* Class-based dark mode (not the prefers-color-scheme default): the toggle
+   adds/removes .dark on <html>; this variant lets components opt into explicit
+   dark-only tweaks when a token flip is not enough. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg: #faf9f7;
+  --surface: #ffffff;
+  --surface-2: #f3f1ed;
+  --fg: #1a2238; /* dark navy */
+  --muted: #6b7280;
+  --accent: #b87333; /* copper */
+  --accent-fg: #ffffff;
+  --accent-hover: #a5662c;
+  --border: #e7e3dc;
+  --ring: #b87333;
+  --ok: #2f7d52;
+  --warn: #b08300;
+  --danger: #b3261e;
+}
+
+.dark {
+  --bg: #0f1115; /* very dark canvas (brand) */
+  --surface: #16181e;
+  --surface-2: #1d2027;
+  --fg: #f3f4f6;
+  --muted: #9aa3b2;
+  --accent: #d4924f; /* copper #b87333, brightened for the dark canvas */
+  --accent-fg: #0f1115;
+  --accent-hover: #e0a060;
+  --border: #282c34;
+  --ring: #d4924f;
+  --ok: #5bbd86;
+  --warn: #e0b13c;
+  --danger: #f1746c;
+}
+
+/* @theme inline: generate utilities that reference the variables by var(),
+   rather than inlining their values, so the .dark overrides above take effect
+   at runtime. This is what makes bg-bg / text-fg / bg-accent theme-aware. */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-hover: var(--accent-hover);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-danger: var(--danger);
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+}

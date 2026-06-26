@@ -1,0 +1,38 @@
+/* Inter, self-hosted (no third-party font CDN — right posture for a governed,
+   air-gappable product). Variable weights cover the type scale. */
+@import '@fontsource-variable/inter';
+
+/* Tailwind v4, single import. */
+@import 'tailwindcss';
+
+/* Tailwind v4 auto-detects sources under the Vite root only; @nexgenomics/core lives
+   outside it (a workspace package), so its components must be registered here or
+   their utility classes are never generated. Every app that consumes core needs
+   this line. */
+@source '../node_modules/@nexgenomics/core/src';
+
+/* Design tokens + theme mapping (the re-skin surface). */
+@import './brand/tokens.css';
+
+html {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+}
+
+/* Respect reduced-motion globally. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

@@ -1,0 +1,26 @@
+# ci.yml — the thin per-app caller. The generator writes THIS into each app
+# repo at .github/workflows/ci.yml. It is deliberately minimal: all logic lives
+# in the referenced reusable workflow (D-caf-2), so a pipeline change is one
+# edit in fleet-ci, not a PR per app.
+#
+# The status-check context this produces is "<caller job> / <reusable job>",
+# i.e. "ci / app-ci". The org ruleset (app-ruleset.json) requires that exact
+# string — CONFIRM it against the first PR's checks list and adjust if GitHub
+# reports it differently.
+#
+# Pin @v1: the app is pinned to a known-good CI line, upgraded deliberately
+# (same discipline as the core pin). Bumping to @v2 is an intentional act.
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  ci:
+    uses: nexgenomics/fleet-ci/.github/workflows/app-ci.yml@v1
+    permissions:
+      contents: read
+      packages: read
+    secrets: inherit
